@@ -43,6 +43,7 @@ The test cases in this repository has also been tagged for more specific scenari
 ```
 mvn clean test -Dcucumber.filter.tags="@Sanity"
 ```
+A .yaml file has also been included which triggers via Github Actions whenever a new merge to master is done. By default, it executes with chromium and in headless mode. This can be changed in https://github.com/lewiesth/ThoughtWorksMarsAirProject/settings/variables/actions
 
 ## Reporting
 
