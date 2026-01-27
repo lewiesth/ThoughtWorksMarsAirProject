@@ -34,9 +34,13 @@ jobs:
         run: |
           mkdir -p target/allure-results/history
           cp -r gh-pages/history/* target/allure-results/history/ || true
+
       - name: Build and Test
         run: mvn clean test -DBROWSER=chromium -DHEADLESS=true
         continue-on-error: true
+
+      - name: Debug - List results
+        run: ls -R allure-results || ls -R target/allure-results
 
       - name: Generate Allure Report
         if: always()
