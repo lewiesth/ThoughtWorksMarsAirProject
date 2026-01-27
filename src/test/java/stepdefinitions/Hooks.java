@@ -12,7 +12,7 @@ public class Hooks {
     @BeforeAll
     public static void setup() {
         playwright = Playwright.create();
-        String browserName = System.getProperty("BROWSER");
+        String browserName = System.getProperty("BROWSER","default");
         Boolean headless= Boolean.valueOf(System.getProperty("HEADLESS"));
         switch (browserName) {
             case "chromium" ->
@@ -21,6 +21,8 @@ public class Hooks {
                     browser = playwright.firefox().launch(new BrowserType.LaunchOptions().setHeadless(headless));
             case "webkit" ->
                     browser = playwright.webkit().launch(new BrowserType.LaunchOptions().setHeadless(headless));
+            default ->
+                browser = playwright.chromium().launch(new BrowserType.LaunchOptions().setHeadless(true));
         }
     }
     @Before
