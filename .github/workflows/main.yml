@@ -29,12 +29,12 @@ jobs:
         if: always()
         run: mvn allure:report
 
-#      - name: Upload Allure Report Artifact
-#        if: always()
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: allure-report
-#          path: target/site/allure-maven-plugin
+      - name: Upload Allure Report Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: target/site/allure-maven-plugin
 
       - name: Deploy to GitHub Pages
         if: always()
