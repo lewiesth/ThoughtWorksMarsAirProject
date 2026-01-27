@@ -1,0 +1,8 @@
+"Epic","Feature","Story","FAILED","BROKEN","PASSED","SKIPPED","UNKNOWN"
+"","Search flights flow","User enters an invalid promo code","0","0","1","0","0"
+"","Search flights flow","User redirects to homepage on clicking back button for search results","0","0","3","0","0"
+"","Search flights flow","User redirects to homepage on clicking MarsAir logo","0","0","3","0","0"
+"","Search flights flow","Average user searches for valid flight","0","0","1","0","0"
+"","Search flights flow","Average user searches for valid flight that is fully booked","0","0","1","0","0"
+"","Search flights flow","Average user searches for invalid flight","2","0","1","0","0"
+"","Search flights flow","User enters a valid promo code","1","0","0","0","0"
