@@ -29,9 +29,31 @@ jobs:
         if: always()
         run: mvn allure:report
 
-      - name: Upload Allure Report Artifact
+#      - name: Upload Allure Report Artifact
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: allure-report
+#          path: target/site/allure-maven-plugin
+
+      - name: Deploy to GitHub Pages
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          name: allure-report
-          path: target/site/allure-maven-plugin
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target/site/allure-maven-plugin
+          publish_branch: gh-pages
+
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy History
+        if: always()
+        run: |
+          mkdir -p target/allure-results/history
+          cp -r gh-pages/history/* target/allure-results/history/ || true
