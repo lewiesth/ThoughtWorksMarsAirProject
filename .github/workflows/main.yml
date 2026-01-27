@@ -21,6 +21,19 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy History
+        if: always()
+        run: |
+          mkdir -p target/allure-results/history
+          cp -r gh-pages/history/* target/allure-results/history/ || true
       - name: Build and Test
         run: mvn clean test -DBROWSER=chromium -DHEADLESS=true
         continue-on-error: true
@@ -43,17 +56,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./target/site/allure-maven-plugin
           publish_branch: gh-pages
-
-      - name: Get Allure history
-        uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Copy History
-        if: always()
-        run: |
-          mkdir -p target/allure-results/history
-          cp -r gh-pages/history/* target/allure-results/history/ || true
