@@ -53,6 +53,10 @@ allure generate --clean
 allure open
 ```
 
+## Github Actions
+
+For ease of readability, the test execution results has also been deployed on Github pages, and can be found at https://lewiesth.github.io/ThoughtWorksMarsAirProject/
+
 ## Results
 
 In this project, 13 test cases have been generated across the 4 user stories. Of the 13, 3 has failed and the defect report for these issues have been raised.
