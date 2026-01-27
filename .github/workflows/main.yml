@@ -39,15 +39,12 @@ jobs:
         run: mvn clean test -DBROWSER=chromium -DHEADLESS=true
         continue-on-error: true
 
-      - name: Debug - List results
-        run: ls -R allure-results
-
-      - name: Debug - List results too
-        run: ls -R target/allure-results
-
       - name: Generate Allure Report
         if: always()
-        run: mvn allure:report -Dallure.results.directory=target/allure-results
+        run: |
+          mkdir -p target/allure-results
+          cp -r allure-results/* target/allure-results/ || true
+          mvn allure:report
 
       - name: Upload Allure Report Artifact
         if: always()
