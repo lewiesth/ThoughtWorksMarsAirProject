@@ -40,7 +40,10 @@ jobs:
         continue-on-error: true
 
       - name: Debug - List results
-        run: ls -R allure-results || ls -R target/allure-results
+        run: ls -R allure-results
+
+      - name: Debug - List results too
+        run: ls -R target/allure-results
 
       - name: Generate Allure Report
         if: always()
