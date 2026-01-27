@@ -21,23 +21,33 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Build and Test
+        run: mvn clean test -DBROWSER=chromium -DHEADLESS=true
+        continue-on-error: true
+
       - name: Get Allure history
         uses: actions/checkout@v4
         if: always()
         continue-on-error: true
         with:
           ref: gh-pages
-          path: gh-pages
+          path: gh-pages-temp
 
       - name: Copy History
         if: always()
         run: |
-          mkdir -p target/allure-results/history
-          cp -r gh-pages/history/* target/allure-results/history/ || true
-
-      - name: Build and Test
-        run: mvn clean test -DBROWSER=chromium -DHEADLESS=true
-        continue-on-error: true
+          # Create the target directory
+          mkdir -p target/allure-results
+          
+          # If tests generated results in the root 'allure-results', move them to target
+          if [ -d "allure-results" ]; then
+            cp -r allure-results/* target/allure-results/ || true
+          fi
+          
+          # Copy history from the gh-pages temp folder into target
+          if [ -d "gh-pages-temp/history" ]; then
+            cp -r gh-pages-temp/history target/allure-results/ || true
+          fi
 
       - name: Generate Allure Report
         if: always()
@@ -60,3 +70,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./target/site/allure-maven-plugin
           publish_branch: gh-pages
+          keep_files: true
