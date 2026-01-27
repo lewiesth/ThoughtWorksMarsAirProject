@@ -22,7 +22,7 @@ jobs:
           cache: maven
 
       - name: Build and Test
-        run: mvn clean test -DBROWSER=chromium -DHEADLESS=true
+        run: mvn clean test -DBROWSER=${{ vars.BROWSER_TYPE }} -DHEADLESS=${{ vars.HEADLESS_MODE }}
         continue-on-error: true
 
       - name: Get Allure history
@@ -36,15 +36,12 @@ jobs:
       - name: Copy History
         if: always()
         run: |
-          # Create the target directory
           mkdir -p target/allure-results
           
-          # If tests generated results in the root 'allure-results', move them to target
           if [ -d "allure-results" ]; then
             cp -r allure-results/* target/allure-results/ || true
           fi
           
-          # Copy history from the gh-pages temp folder into target
           if [ -d "gh-pages-temp/history" ]; then
             cp -r gh-pages-temp/history target/allure-results/ || true
           fi
