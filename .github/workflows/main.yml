@@ -22,7 +22,9 @@ jobs:
           cache: maven
 
       - name: Build and Test
-        run: mvn clean test -DBROWSER=${{ vars.BROWSER_TYPE }} -DHEADLESS=${{ vars.HEADLESS_MODE }} -Dcucumber.filter.tags="{{ vars.TAGS }}"
+        env:
+          TAG_EXPRESSION: ${{ vars.TAGS }}
+        run: mvn clean test -DBROWSER=${{ vars.BROWSER_TYPE }} -DHEADLESS=${{ vars.HEADLESS_MODE }} -Dcucumber.filter.tags="$TAG_EXPRESSION"
         continue-on-error: true
 
       - name: Get Allure history
